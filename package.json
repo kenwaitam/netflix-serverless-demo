@@ -20,5 +20,8 @@
   "dependencies": {
     "express": "^4.16.3",
     "serverless-http": "^1.5.3"
+  },
+  "devDependencies": {
+    "serverless-offline": "^3.18.0"
   }
 }
