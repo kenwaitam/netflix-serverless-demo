@@ -21,11 +21,11 @@ app.get('/video', function (req, res) {
 
     var header = {
       "Accept-Ranges": "bytes",
-      "Content-Range": "bytes" +
+      "Content-Range": "bytes " +
         startSize + "-" + endSize + "/" + fileSize,
       "Content-Encoding": "",
       "Content-Length": chunkSize,
-      "Content-Type": "video/mp4"
+      "Content-Type": "video/mp4",
     }
 
     res.writeHead(200, header)
