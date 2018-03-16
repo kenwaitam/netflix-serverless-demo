@@ -28,13 +28,13 @@ app.get('/video', function (req, res) {
       "Content-Type": "video/mp4"
     }
 
-    res.writeHead(206, header)
+    res.writeHead(200, header)
 
     var stream = fs.createReadStream(
       filePath,
       options
     ).on("readable", () => {
-      while (chunkSize = stream.read(2048)) {
+      while (chunkSize = stream.read(1024)) {
         res.write(chunkSize);
       }
     }).on("close", () => {
