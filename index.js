@@ -1,50 +1,46 @@
 const serverless = require('serverless-http');
 const express = require('express');
-const fs = require('fs');
 const path = require('path');
-const url = require('url');
+const fs = require('fs');
 const app = express();
 
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname + '/index.html'))
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname + '/index.html'));
 })
 
-app.get('/video', function(req, res) {
-    var file = path.resolve(__dirname,"assets/sample.mp4");
-    fs.stat(file, function(err, stats) {
-      if (err) {
-        if (err.code === 'ENOENT') {
-          // 404 Error if file not found
-          return res.sendStatus(404);
-        }
-      res.end(err);
-      }
-      var range = req.headers.range;
-      if (!range) {
-       // 416 Wrong range
-       return res.sendStatus(416);
-      }
-      var positions = range.replace(/bytes=/, "").split("-");
-      var start = parseInt(positions[0], 10);
-      var total = stats.size;
-      var end = positions[1] ? parseInt(positions[1], 10) : total - 1;
-      var chunksize = (end - start) + 1;
+app.get('/video', function (req, res) {
+  var filePath = "assets/sample-2.mp4";
 
-      res.writeHead(206, {
-        "Content-Range": "bytes " + start + "-" + end + "/" + total,
-        "Accept-Ranges": "bytes",
-        "Content-Length": chunksize,
-        "Content-Type": "video/mp4"
-      });
+  fs.stat(filePath, (err, stats) => {
+    var fileSize = stats.size;
+    var chunkSize = 0;
+    var options = {
+      startSize: startSize = 0,
+      endSize: endSize = stats.size
+    }
 
-      var stream = fs.createReadStream(file, { start: start, end: end })
-        .on("open", function() {
-          stream.pipe(res);
-        }).on("error", function(err) {
-          res.end(err);
-        });
+    var header = {
+      "Accept-Ranges": "bytes",
+      "Content-Range": "bytes" +
+        startSize + "-" + endSize + "/" + fileSize,
+      "Content-Encoding": "",
+      "Content-Length": chunkSize,
+      "Content-Type": "video/mp4"
+    }
+
+    res.writeHead(206, header)
+
+    var stream = fs.createReadStream(
+      filePath,
+      options
+    ).on("readable", () => {
+      while (chunkSize = stream.read(2048)) {
+        res.write(chunkSize);
+      }
+    }).on("close", () => {
+      res.end();
     });
-  
+  });
 })
 
 module.exports.handler = serverless(app);
