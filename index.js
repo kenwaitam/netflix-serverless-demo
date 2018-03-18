@@ -4,9 +4,15 @@ const path = require('path');
 const fs = require('fs');
 const app = express();
 
+app.use('/static', express.static(__dirname + '/assets', {
+  setHeaders: function(res, path) {
+    res.set("Content-Encoding", "");
+  }
+}));
+
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname + '/index.html'));
-})
+});
 
 app.get('/video', function (req, res) {
   var filePath = "assets/sample-2.mp4";
@@ -43,6 +49,6 @@ app.get('/video', function (req, res) {
       res.end();
     });
   });
-})
+});
 
 module.exports.handler = serverless(app);
