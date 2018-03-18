@@ -7,6 +7,7 @@ const app = express();
 app.use('/static', express.static(__dirname + '/assets', {
   setHeaders: function(res, path) {
     res.set("Content-Encoding", "");
+    res.set("Content-Type", "video/mp4");
   }
 }));
 
