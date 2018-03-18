@@ -11,7 +11,7 @@ app.use('/static', express.static(__dirname + '/assets', {
 }));
 
 app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname + '/index.html'));
+  res.sendFile(path.join(__dirname + '/dash.html'));
 });
 
 app.get('/video', function (req, res) {

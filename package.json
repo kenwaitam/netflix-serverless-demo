@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/kenwaitam/netflix-serverless-demo#readme",
   "dependencies": {
+    "dashjs": "^2.6.7",
     "express": "^4.16.3",
     "request": "^2.85.0",
     "serverless-http": "^1.5.3"
