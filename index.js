@@ -20,6 +20,8 @@ app.get('/video', function (req, res) {
     }
 
     var header = {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET",
       "Accept-Ranges": "bytes",
       "Content-Range": "bytes " +
         startSize + "-" + endSize + "/" + fileSize,
