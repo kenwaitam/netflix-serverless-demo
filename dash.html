@@ -15,7 +15,7 @@
         </div>
         <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
         <script>
-            (function(){
+            (() => {
                 var url = "https://s3-eu-west-1.amazonaws.com/node-ireland-out/dash/index.mpd";
                 var player = dashjs.MediaPlayer().create();
                 player.initialize(document.querySelector("#videoPlayer"), url, true);
