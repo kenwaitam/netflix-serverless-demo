@@ -12,6 +12,19 @@ functions:
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'
+  test:
+    handler: test.helloHandler
+    memorySize: 1024
+    events:
+      - http:
+          path: test
+          method: get
+  hello:
+    handler: test.hello
+    events:
+      - http:
+          path: hello
+          method: get
 
 plugins:
   - serverless-offline
