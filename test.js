@@ -1,6 +1,7 @@
 'use strict';
 
 const TESTS = 45;
+const STSET = 10000;
 
 // Recursive Big O time complexity of O(φn)
 function fibonacci(index) {
@@ -70,15 +71,21 @@ module.exports.hello = (event, context, callback) => {
 };
 
 module.exports.compute = (event, context, callback) => {
-
     var start_time = new Date().getTime();
-    compute();
+    
+    for (context in range(STSET)) {
+        if (arrayHasOwnIndex(range(STSET), context)) {
+            console.log(context);
+            compute();
+        }
+    }
+
     var duration = new Date().getTime() - start_time;
     
     const response = {
         statusCode: 200,
         body: JSON.stringify({
-            message: 'Duration: ' + duration / TESTS
+            message: 'Duration: ' + duration / STSET
         }),
     };
 
@@ -93,6 +100,7 @@ module.exports.fibHandler = (event, context, callback) => {
 
     for (context in range(TESTS)) {
         if (arrayHasOwnIndex(range(TESTS), context)) {
+            console.log(context);
             fibonacci(context);
         }
     }
