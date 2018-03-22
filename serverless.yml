@@ -12,12 +12,12 @@ functions:
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'
-  test:
-    handler: test.fibHandler
+  fibo:
+    handler: test.fibonacci
     memorySize: 128
     events:
       - http:
-          path: test
+          path: fibo
           method: get
   compute:
     handler: test.compute

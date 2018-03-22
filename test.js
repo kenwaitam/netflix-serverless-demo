@@ -4,16 +4,16 @@ const TESTS = 45;
 const STSET = 10000;
 
 // Recursive Big O time complexity of O(φn)
-function fibonacci(index) {
+function fiboRec(index) {
     if (index < 2) {
         return index;
     } else {
-        return fibonacci(index - 1) + fibonacci(index - 2);
+        return fiboRec(index - 1) + fiboRec(index - 2);
     }
 }
 
 // Itterator
-function fib(n) {
+function fiboItt(n) {
     var a, b, c;
     if (n < 2)
         return n;
@@ -36,10 +36,6 @@ function compute() {
     }
 }
 
-function arrayHasOwnIndex(array, prop) {
-    return array.hasOwnProperty(prop) && /^0$|^[1-9]\d*$/.test(prop) && prop <= 4294967294; // 2^32 - 2
-}
-
 function range(start, stop, step) {
     if (typeof stop == 'undefined') {
         // one param defined
@@ -55,6 +51,16 @@ function range(start, stop, step) {
     };
     return result;
 };
+
+function milliToSeconds(millis) {
+    var minutes = Math.floor(millis / 60000);
+    var seconds = ((millis % 60000) / 1000).toFixed(0);
+    return (seconds == 60 ? (minutes + 1) + ":00" : minutes + ":" + (seconds < 10 ? "0" : "") + seconds);
+}
+
+function arrayHasOwnIndex(array, prop) {
+    return array.hasOwnProperty(prop) && /^0$|^[1-9]\d*$/.test(prop) && prop <= 4294967294; // 2^32 - 2
+}
 
 module.exports.hello = (event, context, callback) => {
     const response = {
@@ -72,7 +78,7 @@ module.exports.hello = (event, context, callback) => {
 
 module.exports.compute = (event, context, callback) => {
     var start_time = new Date().getTime();
-    
+
     for (context in range(STSET)) {
         if (arrayHasOwnIndex(range(STSET), context)) {
             console.log(context);
@@ -81,11 +87,11 @@ module.exports.compute = (event, context, callback) => {
     }
 
     var duration = new Date().getTime() - start_time;
-    
+
     const response = {
         statusCode: 200,
         body: JSON.stringify({
-            message: 'Duration: ' + duration / STSET
+            message: 'Duration: ' + milliToSeconds(duration)
         }),
     };
 
@@ -95,13 +101,13 @@ module.exports.compute = (event, context, callback) => {
     // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
 };
 
-module.exports.fibHandler = (event, context, callback) => {
+module.exports.fibonacci = (event, context, callback) => {
     var start_time = new Date().getTime();
 
     for (context in range(TESTS)) {
         if (arrayHasOwnIndex(range(TESTS), context)) {
             console.log(context);
-            fibonacci(context);
+            fiboRec(context);
         }
     }
 
@@ -110,10 +116,10 @@ module.exports.fibHandler = (event, context, callback) => {
     const response = {
         statusCode: 200,
         body: JSON.stringify({
-            message: 'Duration: ' + duration / TESTS
+            message: 'Duration: ' + milliToSeconds(duration)
         }),
     };
 
-    console.log(duration / TESTS);
+    console.log(duration);
     callback(null, response);
 };
