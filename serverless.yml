@@ -14,12 +14,14 @@ functions:
       - http: 'ANY {proxy+}'
   test:
     handler: test.fibHandler
+    memorySize: 128
     events:
       - http:
           path: test
           method: get
   compute:
     handler: test.compute
+    memorySize: 128
     events:
       - http:
           path: compute
