@@ -1,6 +1,6 @@
 'use strict';
 
-const TESTS = 10;
+const TESTS = 45;
 
 // Recursive Big O time complexity of O(φn)
 function fibonacci(index) {
