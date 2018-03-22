@@ -71,12 +71,14 @@ module.exports.hello = (event, context, callback) => {
 
 module.exports.compute = (event, context, callback) => {
 
+    var start_time = new Date().getTime();
     compute();
-
+    var duration = new Date().getTime() - start_time;
+    
     const response = {
         statusCode: 200,
         body: JSON.stringify({
-            message: 'Done'
+            message: 'Duration: ' + duration / TESTS
         }),
     };
 
