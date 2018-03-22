@@ -1,6 +1,6 @@
 'use strict';
 
-const TESTS = 10;
+const TESTS = 45;
 
 // Recursive Big O time complexity of O(φn)
 function fibonacci(index) {
@@ -57,26 +57,41 @@ function range(start, stop, step) {
 
 module.exports.hello = (event, context, callback) => {
     const response = {
-      statusCode: 200,
-      body: JSON.stringify({
-        message: 'Go Serverless v1.0! Your function executed successfully!'
-      }),
+        statusCode: 200,
+        body: JSON.stringify({
+            message: 'Hello World!'
+        }),
     };
-  
+
     callback(null, response);
-  
+
     // Use this code if you don't use the http event with the LAMBDA-PROXY integration
     // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
-  };
-  
+};
 
-module.exports.helloHandler = (event, context, callback) => {
+module.exports.compute = (event, context, callback) => {
+
+    compute();
+
+    const response = {
+        statusCode: 200,
+        body: JSON.stringify({
+            message: 'Done'
+        }),
+    };
+
+    callback(null, response);
+
+    // Use this code if you don't use the http event with the LAMBDA-PROXY integration
+    // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
+};
+
+module.exports.fibHandler = (event, context, callback) => {
     var start_time = new Date().getTime();
 
     for (context in range(TESTS)) {
         if (arrayHasOwnIndex(range(TESTS), context)) {
             fibonacci(context);
-            console.log(context);
         }
     }
 

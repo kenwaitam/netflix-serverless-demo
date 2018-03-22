@@ -13,14 +13,20 @@ functions:
       - http: ANY /
       - http: 'ANY {proxy+}'
   test:
-    handler: test.helloHandler
-    memorySize: 1024
+    handler: test.fibHandler
     events:
       - http:
           path: test
           method: get
+  compute:
+    handler: test.compute
+    events:
+      - http:
+          path: compute
+          method: get
   hello:
     handler: test.hello
+    memorySize: 128
     events:
       - http:
           path: hello
